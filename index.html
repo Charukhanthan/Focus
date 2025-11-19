@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZenFocus | Your Personal Dashboard</title>
+    <meta name="description" content="A premium productivity dashboard to manage tasks and focus.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-gradient"></div>
+
+    <main class="dashboard-container">
+        <!-- Header Section -->
+        <header class="glass-panel header-section">
+            <div class="greeting-container">
+                <h1 id="greeting">Good Morning</h1>
+            </div>
+
+            <div class="header-right">
+                <div class="datetime-group" id="datetime-trigger">
+                    <h2 id="clock">00:00</h2>
+                    <p id="date-display">Tuesday, November 19</p>
+                </div>
+                <button id="settings-btn" class="btn-icon-small" aria-label="Settings">
+                    <span class="material-icons-round">settings</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Settings Modal -->
+        <dialog id="settings-modal" class="glass-panel modal">
+            <div class="modal-header">
+                <h3>Settings</h3>
+                <button id="close-modal-btn" class="btn-icon-small"><span
+                        class="material-icons-round">close</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label for="focus-time">Focus (minutes)</label>
+                    <input type="number" id="focus-time" min="1" max="60" value="25">
+                </div>
+                <div class="setting-group">
+                    <label for="short-break-time">Short Break (minutes)</label>
+                    <input type="number" id="short-break-time" min="1" max="30" value="5">
+                </div>
+                <div class="setting-group">
+                    <label for="long-break-time">Long Break (minutes)</label>
+                    <input type="number" id="long-break-time" min="1" max="60" value="15">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="save-settings-btn" class="btn-primary">Save Changes</button>
+            </div>
+        </dialog>
+
+        <!-- Main Grid -->
+        <div class="dashboard-grid">
+            <!-- Focus Timer Section -->
+            <section class="glass-panel timer-section">
+                <div class="section-header">
+                    <h3><span class="material-icons-round">timer</span> Focus Timer</h3>
+                </div>
+                <div class="timer-display">
+                    <div class="time-circle">
+                        <svg class="progress-ring" width="200" height="200">
+                            <circle class="progress-ring__circle" stroke="white" stroke-width="8" fill="transparent"
+                                r="90" cx="100" cy="100" />
+                        </svg>
+                        <span id="timer-text">25:00</span>
+                    </div>
+                </div>
+                <div class="timer-controls">
+                    <button id="start-btn" class="btn-primary"><span class="material-icons-round">play_arrow</span>
+                        Start</button>
+                    <button id="reset-btn" class="btn-secondary"><span class="material-icons-round">refresh</span>
+                        Reset</button>
+                </div>
+                <div class="timer-modes">
+                    <button class="mode-btn active" data-mode="focus">Focus</button>
+                    <button class="mode-btn" data-mode="short">Short Break</button>
+                    <button class="mode-btn" data-mode="long">Long Break</button>
+                </div>
+            </section>
+
+            <!-- Task Manager Section -->
+            <section class="glass-panel tasks-section">
+                <div class="section-header">
+                    <h3><span class="material-icons-round">check_circle</span> Tasks</h3>
+                    <span id="task-count" class="badge">0 remaining</span>
+                </div>
+
+                <div class="add-task-container">
+                    <input type="text" id="new-task-input" placeholder="What needs to be done?" aria-label="New task">
+                    <button id="add-task-btn" class="btn-icon"><span class="material-icons-round">add</span></button>
+                </div>
+
+                <ul id="task-list" class="task-list">
+                    <!-- Tasks will be injected here -->
+                </ul>
+            </section>
+
+            <!-- Quick Notes / Ambient Section -->
+            <div class="right-column">
+                <section class="glass-panel notes-section">
+                    <div class="section-header">
+                        <h3><span class="material-icons-round">edit_note</span> Quick Thoughts</h3>
+                    </div>
+                    <textarea id="quick-notes" placeholder="Capture your ideas here..."></textarea>
+                </section>
+
+                <section class="glass-panel sounds-section">
+                    <div class="section-header">
+                        <h3><span class="material-icons-round">headphones</span> Ambient Sounds</h3>
+                    </div>
+                    <div class="sound-controls">
+                        <button class="sound-btn" data-sound="rain" aria-label="Rain Sound">
+                            <span class="material-icons-round">water_drop</span>
+                        </button>
+                        <button class="sound-btn" data-sound="forest" aria-label="Forest Sound">
+                            <span class="material-icons-round">forest</span>
+                        </button>
+                        <button class="sound-btn" data-sound="stream" aria-label="Stream Sound">
+                            <span class="material-icons-round">waves</span>
+                        </button>
+                        <button class="sound-btn" data-sound="white_noise" aria-label="White Noise">
+                            <span class="material-icons-round">blur_on</span>
+                        </button>
+                    </div>
+                    <div class="volume-control">
+                        <span class="material-icons-round">volume_down</span>
+                        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5"
+                            aria-label="Volume">
+                        <span class="material-icons-round">volume_up</span>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Calendar Modal -->
+    <dialog id="calendar-modal" class="glass-panel modal calendar-modal">
+        <div class="modal-header">
+            <h3 id="calendar-month-year">Month Year</h3>
+            <div class="calendar-nav">
+                <button id="prev-month" class="btn-icon-small"><span
+                        class="material-icons-round">chevron_left</span></button>
+                <button id="next-month" class="btn-icon-small"><span
+                        class="material-icons-round">chevron_right</span></button>
+                <button id="close-calendar-btn" class="btn-icon-small"><span
+                        class="material-icons-round">close</span></button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="calendar-grid" id="calendar-grid">
+                <!-- Calendar injected here -->
+            </div>
+        </div>
+    </dialog>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
